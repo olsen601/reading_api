@@ -48,7 +48,11 @@ def insert_data(items_data):
                 google_id = data['google_id']
                 self_link = data['self_link']
                 title = data['title']
-                publisher = data['publisher']
+                try:
+                    publisher = data['publisher']
+                except:
+                    publisher = "No Publisher"
+                    pass
                 published_date = data['published_date']
                 description = data['description']
                 isbn_13 = data['isbn_13']

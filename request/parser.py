@@ -18,11 +18,10 @@ class Categorie:
 
 
 class Book:
-    def __init__(self, google_id, self_link, title, publisher, published_date, description, isbn_13, isbn_10, small_thumbnail):
+    def __init__(self, google_id, self_link, title, published_date, description, isbn_13, isbn_10, small_thumbnail):
         self.google_id = google_id
         self.self_link = self_link
         self.title = title
-        self.publisher = publisher
         self.published_date = published_date
         self.description = description
         self.isbn_13 = isbn_13
@@ -30,12 +29,11 @@ class Book:
         self.small_thumbnail = small_thumbnail
 
     def dict(self):
-        return {'google_id':self.google_id,'self_link':self.self_link,'title':self.title,'publisher':self.publisher,'published_date':self.published_date,'description':self.description,'isbn_13':self.isbn_13,'isbn_10':self.isbn_10,'small_thumbnail':self.small_thumbnail}
+        return {'google_id':self.google_id,'self_link':self.self_link,'title':self.title,'published_date':self.published_date,'description':self.description,'isbn_13':self.isbn_13,'isbn_10':self.isbn_10,'small_thumbnail':self.small_thumbnail}
 
 
 def extract(raw):
 
-    total = raw['totalItems']
     items = raw['items']
     items_data = {}
 
@@ -47,7 +45,6 @@ def extract(raw):
         self_link = raw['items'][index]['selfLink']
         title = path['title']
         authors = path['authors']
-        publisher = path['publisher']
         published_date = path['publishedDate']
         description = path['description']
         isbn = path['industryIdentifiers'][0:2]
@@ -62,7 +59,7 @@ def extract(raw):
 
         author = Author(authors)
         categorie = Categorie(categories)
-        book = Book(google_id, self_link, title, publisher, published_date, description, isbn_13, isbn_10, small_thumbnail)
+        book = Book(google_id, self_link, title, published_date, description, isbn_13, isbn_10, small_thumbnail)
 
         item_data = {("item_"+str(index)): {**author.dict(), **categorie.dict(), **book.dict()}}
         items_data.update(item_data)
